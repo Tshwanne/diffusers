@@ -63,7 +63,7 @@ if is_wandb_available():
     import wandb
 
 # Will error if the minimal version of diffusers is not installed. Remove at your own risks.
-check_min_version("0.30.0.dev0")
+check_min_version("0.31.0.dev0")
 
 logger = get_logger(__name__)
 
@@ -1201,7 +1201,7 @@ def main(args):
             initial_global_step = 0
         else:
             accelerator.print(f"Resuming from checkpoint {path}")
-            accelerator.c(os.path.join(args.pretrained_model_name_or_path, path))
+            accelerator.load_state(os.path.join(args.pretrained_model_name_or_path, path))
             global_step = int(path.split("-")[1])
 
             initial_global_step = global_step
