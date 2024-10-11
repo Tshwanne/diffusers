@@ -238,6 +238,13 @@ def parse_args(input_args=None):
         help="Path to pretrained model or model identifier from huggingface.co/models.",
     )
     parser.add_argument(
+        "--checkpoint_start_step",
+        type=int,
+        default=0,
+        required=False,
+        help="Step at which checkpoint saving will start.",
+    )
+    parser.add_argument(
         "--revision",
         type=str,
         default=None,
@@ -1338,7 +1345,7 @@ def main(args):
                 if accelerator.is_main_process:
                     if global_step % args.checkpointing_steps == 0:
                         # _before_ saving state, check if this save would set us over the `checkpoints_total_limit`
-                        if args.checkpoints_total_limit is not None:
+                        if global_step >= args.checkpoint_start_step and args.checkpoints_total_limit is not None:
                             checkpoints = os.listdir(args.output_dir)
                             checkpoints = [d for d in checkpoints if d.startswith("checkpoint")]
                             checkpoints = sorted(checkpoints, key=lambda x: int(x.split("-")[1]))
