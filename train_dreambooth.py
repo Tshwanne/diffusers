@@ -592,6 +592,10 @@ def parse_args(input_args=None):
     else:
         args = parser.parse_args()
 
+    if args.checkpoints_total_limit == -1:
+        args.checkpoints_total_limit = None
+
+
     env_local_rank = int(os.environ.get("LOCAL_RANK", -1))
     if env_local_rank != -1 and env_local_rank != args.local_rank:
         args.local_rank = env_local_rank
