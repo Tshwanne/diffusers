@@ -590,7 +590,9 @@ def parse_args(input_args=None):
     if input_args is not None:
         args = parser.parse_args(input_args)
     else:
-        args = parser.parse_args()
+        args = parser.parse_args
+
+    print(f"args.checkpoints_total_limit is args.checkpoints_total_limit}")
 
     if args.checkpoints_total_limit == -1:
         print("args.checkpoints_total_limit is -1 setting it to none")
